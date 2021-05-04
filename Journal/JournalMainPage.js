@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 class JournalMainPage extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View >
         <Text>Journal Main Page</Text>
       </View>
     );

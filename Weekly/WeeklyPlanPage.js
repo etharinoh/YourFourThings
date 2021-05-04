@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableHighlight, SafeAreaView } from 'react-
 class WeeklyPlanPage extends React.Component {
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView >
         <Text>WeeklyPlanPage</Text>
       </SafeAreaView>
     );

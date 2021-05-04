@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 class JournalEntryPage extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View >
         <Text> JournalEntryPage !</Text>
       </View>
     );

@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 class LoginPage extends React.Component {
   render() {
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView >
         <Text>Open up App.js to start working on your app!</Text>
         <TextInput  placeholder="username"></TextInput>
         <TextInput placeholder="password"></TextInput>
