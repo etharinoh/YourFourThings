@@ -55,3 +55,10 @@
 * [ ] -  search can be done on things from past
 * [ ] - search can be done on current weeks items
 * [ ] - search can be done on tags
+
+
+<ion-icon name="clipboard-outline"></ion-icon> Todo
+<ion-icon name="create-outline"></ion-icon> Journal
+<ion-icon name="today-outline"></ion-icon>  Things
+<ion-icon name="settings-outline"></ion-icon> settings
+<ion-icon name="search-outline"></ion-icon> search

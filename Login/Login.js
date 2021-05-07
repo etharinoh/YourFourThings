@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, SafeAreaView } from 'react-native';
 
 class LoginPage extends React.Component {
   render() {
@@ -11,7 +11,6 @@ class LoginPage extends React.Component {
         <Button title = "login">"Login"</Button>
         <Button title="create">"Create Account"</Button>
         <Button title="forgotten">"Forgotten Password"</Button>
-        <StatusBar style="auto" />
       </SafeAreaView>
     );
   }
