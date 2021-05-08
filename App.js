@@ -22,11 +22,19 @@ import SettingsPage from "./Settings/SettingsPage";
 import WeeklyPlanPage from "./Weekly/WeeklyPlanPage";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import {Provider} from 'react-redux'
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from './redux/reducers'
+import thunk from 'redux-thunk'
+
+const store = createStore(rootReducer, applyMiddleware(thunk))
+
 const Tab = createBottomTabNavigator();
 
 
 export default function App() {
   return (
+    <Provider store = {store}>
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -37,12 +45,14 @@ export default function App() {
               iconName = "today-outline"
             } else if (route.name === "Settings") {
               iconName = "settings-outline"
-            } else if (route.name === "JournalMain") {
+            } else if (route.name === "Journal") {
               iconName = "create-outline"
             } else if (route.name === "Search") {
               iconName = "search-outline"
             } else if (route.name === "Weekly") {
               iconName = "clipboard-outline"
+            }else if (route.name === "Login") {
+              iconName = "person-outline"
             }
 
             // You can return any component that you like here!
@@ -56,13 +66,14 @@ export default function App() {
       >
         
         <Tab.Screen name="Login" component={LoginPage} />
-        <Tab.Screen name="JournalMain" component={JournalMainPage} />
+        <Tab.Screen name="Journal" component={JournalMainPage} />
         <Tab.Screen name="Home" component={MainPage} />
         <Tab.Screen name="Search" component={SearchPage} />
         <Tab.Screen name="Settings" component={SettingsPage} />
         <Tab.Screen name="Weekly" component={WeeklyPlanPage} />
       </Tab.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 const styles = StyleSheet.create({
