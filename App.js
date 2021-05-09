@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, {Component} from "react";
 import {
   StyleSheet,
   Text,
@@ -27,16 +27,54 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
 
+import firebase from './Firebase/config'
+
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const Tab = createBottomTabNavigator();
 
+class App extends Component {
+  constructor(props){
+    super(props)
 
-export default function App() {
-  return (
+    this.state = {
+      loaded: false,
+      loggedIn: false
+    }
+  }
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        this.setState({
+          loggedIn: false,
+          loaded: true
+        })
+      }
+      else {
+        this.setState({
+          loggedIn: true,
+          loaded: true
+        })
+      }
+    })
+  }
+  render(){
+    const {loggedIn, loaded} = this.state
+
+    if (!loaded) {
+      return (
+        <SafeAreaView><Text>Loading</Text></SafeAreaView>
+      )
+    }
+    if (!loggedIn) {
+      return (
+        <LoginPage />
+      )
+    }
+    return (
     <Provider store = {store}>
     <NavigationContainer>
-      <Tab.Navigator
+      <Tab.Navigator 
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -51,8 +89,6 @@ export default function App() {
               iconName = "search-outline"
             } else if (route.name === "Weekly") {
               iconName = "clipboard-outline"
-            }else if (route.name === "Login") {
-              iconName = "person-outline"
             }
 
             // You can return any component that you like here!
@@ -64,17 +100,18 @@ export default function App() {
           inactiveTintColor: "grey",
         }}
       >
-        
-        <Tab.Screen name="Login" component={LoginPage} />
-        <Tab.Screen name="Journal" component={JournalMainPage} />
-        <Tab.Screen name="Home" component={MainPage} />
         <Tab.Screen name="Search" component={SearchPage} />
-        <Tab.Screen name="Settings" component={SettingsPage} />
+        <Tab.Screen name="Journal" component={JournalMainPage} />
+        
+        <Tab.Screen name="Home" component={MainPage} options={{unmountOnBlur: true}}/>
+        
         <Tab.Screen name="Weekly" component={WeeklyPlanPage} />
+        <Tab.Screen name="Settings" component={SettingsPage} />
       </Tab.Navigator>
     </NavigationContainer>
     </Provider>
   );
+  }
 }
 const styles = StyleSheet.create({
   container: {
@@ -84,3 +121,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default App

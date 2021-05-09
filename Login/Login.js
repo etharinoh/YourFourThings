@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, SafeAreaView, Modal, Alert } from 'react-native';
 import firebase from '../Firebase/config'
-import MainPage from '../Main/MainPage';
 
 
 class LoginPage extends Component {
@@ -22,6 +21,9 @@ class LoginPage extends Component {
     this.onSignIn = this.onSignIn.bind(this)
   }
 
+  onLogout(){
+    firebase.auth().signOut()
+  }
   onCreateNew() {
     const { username, password, email } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -37,7 +39,6 @@ class LoginPage extends Component {
         Alert.alert("Success", "Your are now logged in", [
           { text: "OK", onPress: () => console.log("OK Pressed") }
         ])
-        this.props.navigation.jumpTo('Home')
       })
       .catch((error) => {
         Alert.alert("Error", error.message, [
@@ -59,7 +60,6 @@ class LoginPage extends Component {
         Alert.alert("Success", "You are now logged in", [
           { text: "OK", onPress: () => console.log("OK Pressed") }
         ])
-        this.props.navigation.jumpTo('Home')
       })
       .catch((error) => {
         Alert.alert("Error", error.message, [
@@ -95,16 +95,8 @@ class LoginPage extends Component {
     })
   }
   render() {
-    const { loggedIn, loaded } = this.state;
-    if (!loaded) {
-      return (
-        <SafeAreaView><Text>Loading</Text></SafeAreaView>
-      )
-    }
-    else {
-      if (!loggedIn) {
-        //show login screen
-        return (
+
+    return(
 
           <SafeAreaView style={styles.centeredView}>
             <Modal
@@ -112,7 +104,7 @@ class LoginPage extends Component {
               transparent={true}
               visible={this.state.modalVisible}
               onRequestClose={() => {
-                this.setModalVisible(!modalVisible);
+                this.setModalVisible(false);
               }}
             ><View style={styles.centeredView}>
                 <View style={styles.modalView}>
@@ -123,26 +115,18 @@ class LoginPage extends Component {
                 </View>
               </View>
             </Modal>
-            <TextInput placeholder="username"></TextInput>
-            <TextInput placeholder="password"></TextInput>
+            <TextInput placeholder="username" onChangeText={(email) => this.setState({ email })}></TextInput>
+            <TextInput placeholder="password" onChangeText={(password) => this.setState({ password })}></TextInput>
             <Button title="login" onPress={() => { this.onSignIn() }}>"Login"</Button>
             <Button title="create" onPress={() => { this.setModalVisible(true) }}>"Create Account"</Button>
           </SafeAreaView>
-        )
-      }
-      else {
-        //show logout screen
-        return(
-          <SafeAreaView>
-            <Button title="logout" onPress = {() => {}}>LogOut</Button>
-          </SafeAreaView>
-        )
-      }
+      
+    )
+    
     }
 
   }
 
-}
 
 const styles = StyleSheet.create({
   centeredView: {

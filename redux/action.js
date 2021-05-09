@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import firebase from '../Firebase/config'
 import {USER_STATE_CHANGE} from "./constants"
 
 export function fetchUser() {
@@ -8,7 +8,7 @@ export function fetchUser() {
         .get()
         .then((result) =>{
             if(result.exists){
-                console.log(result.data)
+                console.log(result.data())
                 dispatch({type : USER_STATE_CHANGE, currentUser: result.data()})
             }
             else{

@@ -57,6 +57,9 @@
 * [ ] - search can be done on tags
 
 
+Journals and journal entry should use options show header
+
+
 <ion-icon name="clipboard-outline"></ion-icon> Todo
 <ion-icon name="create-outline"></ion-icon> Journal
 <ion-icon name="today-outline"></ion-icon>  Things
