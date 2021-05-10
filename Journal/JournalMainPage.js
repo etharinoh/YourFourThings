@@ -1,12 +1,41 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+import JournalHeader from './JournalHeader';
 
+var navigation;
 class JournalMainPage extends React.Component {
+  constructor(props){
+    super(props)
+    this.TitleList =  React.createRef()
+    navigation = props.navigation
+    console.log(navigation)
+    
+  }
+
+  newJournal(){
+    //navigate to new empty journal page
+    navigation.navigate('Entry',{newJournal: true})
+    //this.props.navigator.navigate('JournalEntryPage', {})
+  }
+  componentDidMount(){
+    //Check
+  }
   render() {
     return (
-      <View >
-        <Text>Journal Main Page</Text>
+      <SafeAreaView >
+      <View>
+        <Text style={{fontSize: 42, marginTop: 15, textAlign: "center"}}>Journal Main Page</Text>
+
+
       </View>
+      {/*This is where the journals wi9ll be */}
+      <ScrollView ref={this.TitleList}>
+
+      </ScrollView>
+      <JournalHeader journalTitle='first'/>
+
+      <Button title='Add new journal Entry' onPress={this.newJournal}/>
+      </SafeAreaView>
     );
   }
 }

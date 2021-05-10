@@ -8,6 +8,7 @@ import {
   Button,
   SafeAreaView,
   Settings,
+  LogBox,
 } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
@@ -29,9 +30,14 @@ import thunk from 'redux-thunk'
 
 import firebase from './Firebase/config'
 
+import { createStackNavigator } from '@react-navigation/stack';
+
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const Tab = createBottomTabNavigator();
+
+const WeeklyStack = createStackNavigator()
+const JournalStack = createStackNavigator()
 
 class App extends Component {
   constructor(props){
@@ -41,6 +47,9 @@ class App extends Component {
       loaded: false,
       loggedIn: false
     }
+    LogBox.ignoreLogs([
+      'Setting a timer'
+      ])
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -70,7 +79,9 @@ class App extends Component {
       return (
         <LoginPage />
       )
-    }
+    }else{
+
+    
     return (
     <Provider store = {store}>
     <NavigationContainer>
@@ -101,7 +112,7 @@ class App extends Component {
         }}
       >
         <Tab.Screen name="Search" component={SearchPage} />
-        <Tab.Screen name="Journal" component={JournalMainPage} />
+        <Tab.Screen name="Journal" component={JStack} />
         
         <Tab.Screen name="Home" component={MainPage} options={{unmountOnBlur: true}}/>
         
@@ -111,7 +122,16 @@ class App extends Component {
     </NavigationContainer>
     </Provider>
   );
-  }
+  }}
+}
+
+function JStack(){
+  return (
+    <JournalStack.Navigator>
+      <JournalStack.Screen name='Main' component={JournalMainPage}/>
+      <JournalStack.Screen name='Entry' component={JournalEntryPage}/>
+    </JournalStack.Navigator>
+  )
 }
 const styles = StyleSheet.create({
   container: {

@@ -21,9 +21,6 @@ class LoginPage extends Component {
     this.onSignIn = this.onSignIn.bind(this)
   }
 
-  onLogout(){
-    firebase.auth().signOut()
-  }
   onCreateNew() {
     const { username, password, email } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -73,10 +70,8 @@ class LoginPage extends Component {
       })
   }
   setModalVisible(visible) {
-    console.log(visible);
-    console.log(this.state);
     this.setState({ modalVisible: visible });
-    console.log(this.state);
+    
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -110,7 +105,7 @@ class LoginPage extends Component {
                 <View style={styles.modalView}>
                   <TextInput placeholder="new username" onChangeText={(username) => this.setState({ username })}></TextInput>
                   <TextInput placeholder="new email" onChangeText={(email) => this.setState({ email })}></TextInput>
-                  <TextInput placeholder="new password" onChangeText={(password) => this.setState({ password })}></TextInput>
+                  <TextInput placeholder="new password" onChangeText={(password) => this.setState({ password })} caretHidden></TextInput>
                   <Button title="createNew" onPress={() => { this.onCreateNew() }}>"Create"</Button>
                 </View>
               </View>
