@@ -29,19 +29,19 @@
         public string username { get; set; }
         public string passwordHash { get; }
 
-* [ ] - Create a user
-* [ ] - Login as user
+* [x] - Create a user
+* [x] - Login as user
 * [ ] - Change password
 
 
-* [ ] - Have Database inteeraction
+* [x] - Have Database inteeraction
 
 
-* [ ] - Have fourthings output porperly
-* [ ] - Create fourthings properly
-* [ ] - Add tags
-* [ ] - Add Reflecxtion for the day
-* [ ] - Date picker to see old dates or set new ones
+* [x] - Have fourthings output porperly
+* [x] - Create fourthings properly
+* [x] - Add tags
+* [x] - Add Reflecxtion for the day
+* [x] - Date picker to see old dates or set new ones
 
 
 * [ ] - Have weeks plans be viewable

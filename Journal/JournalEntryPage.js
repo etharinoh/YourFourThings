@@ -9,6 +9,8 @@ import {
   Button,
 } from "react-native";
 
+import  firebase from '../Firebase/config'
+
 class JournalEntryPage extends React.Component {
   constructor(props) {
     super(props);
@@ -17,11 +19,11 @@ class JournalEntryPage extends React.Component {
     if (props.route.params.newJournal) {
       //populate from firebase
       this.state = {
-        currentJournal: { title: "", text: "" },
+         title: "", text: "" 
       };
     } else {
       this.state = {
-        currentJournal: { title: "", text: "" },
+        title: "", text: "" 
       };
     }
     this.publish = this.publish.bind(this)
@@ -29,6 +31,16 @@ class JournalEntryPage extends React.Component {
 
   publish(){
     //Convert the entry to a file, upload the file and then add an entry to the firestore collection journals
+    console.log(this.state)
+    firebase
+    .firestore()
+    .collection("journals")
+    .doc(firebase.auth().currentUser.uid)
+    .collection(this.state.title)
+    .doc(this.state.title)
+    .set({title: this.state.title, text: this.state.text })
+    .then((result) => console.log(result))
+    .catch((error) => console.log(error))
   }
   render() {
     return (

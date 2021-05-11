@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import JournalHeader from './JournalHeader';
+import firebase from  '../Firebase/config'
 
 var navigation;
 class JournalMainPage extends React.Component {
@@ -8,7 +9,6 @@ class JournalMainPage extends React.Component {
     super(props)
     this.TitleList =  React.createRef()
     navigation = props.navigation
-    console.log(navigation)
     
   }
 
@@ -18,7 +18,17 @@ class JournalMainPage extends React.Component {
     //this.props.navigator.navigate('JournalEntryPage', {})
   }
   componentDidMount(){
-    //Check
+    //Check all created and make a journal header with them
+    firebase
+    .firestore()
+    .collection("journals")
+    .doc(firebase.auth().currentUser.uid)
+    .get()
+    .then((results) => {
+      console.log(results)
+      
+    })
+    .catch((error) => console.error(error))
   }
   render() {
     return (
