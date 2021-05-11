@@ -16,7 +16,7 @@ class SettingsPage extends React.Component {
     return (
       <View >
         <Text>Settings</Text>
-        <SafeAreaView>
+        <SafeAreaView style={{margin: 15}}>
             <Button title="logout" onPress = {() => {this.onLogout()}}>LogOut</Button>
           </SafeAreaView>
       </View>

@@ -17,3 +17,20 @@ export function fetchUser() {
         })
     })
 }
+export function fetchJournals(){
+    return ((dispatch) => {
+    firebase
+    .firestore()
+    .collection("journals")
+    .doc(firebase.auth().currentUser.uid)
+    .collection('userJournals')
+    .get()
+    .then((results) => {
+      this.setState({journalsFound: results})
+      this.setState({refreshJournals: true}) 
+      console.log(results)
+    })
+    .catch((error) => console.error(error))
+    
+  })
+}

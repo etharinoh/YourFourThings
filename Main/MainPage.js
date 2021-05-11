@@ -17,7 +17,7 @@ import WeeklyPlanPage from "../Weekly/WeeklyPlanPage";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchUser } from "../redux/action";
+import { fetchUser, fetchJournals} from "../redux/action";
 import "./Thing";
 import Thing from "./Thing";
 import firebase from "../Firebase/config";
@@ -295,6 +295,6 @@ const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
 });
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchUser }, dispatch);
+  bindActionCreators({ fetchUser, fetchJournals }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(MainPage);

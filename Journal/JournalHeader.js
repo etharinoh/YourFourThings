@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
+var navigation
 class JournalHeader extends Component {
     constructor(props){
         super(props)
-
+        navigation = props.navigation
        
         this.state = {
-            journalTitle: props.journalTitle,
-            journal: {},
+            journalTitle: props.title,
+            journalText: props.text,
             props: props,
         }
+        this.onHeaderPress = this.onHeaderPress.bind(this)
+
+        //console.log(this.state)
     }
     onHeaderPress(){
-        
+        console.log(this.state)
+        navigation.navigate('Entry',{newJournal: false, text: this.state.journalText, title: this.state.journalTitle})
     }
     render() {
         return (

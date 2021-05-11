@@ -1,7 +1,8 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
 import JournalHeader from './JournalHeader';
 import firebase from  '../Firebase/config'
+import {connect} from 'react'
 
 var navigation;
 class JournalMainPage extends React.Component {
@@ -9,6 +10,9 @@ class JournalMainPage extends React.Component {
     super(props)
     this.TitleList =  React.createRef()
     navigation = props.navigation
+    this.state = {
+      journalsFound: [],
+    }
     
   }
 
@@ -23,14 +27,27 @@ class JournalMainPage extends React.Component {
     .firestore()
     .collection("journals")
     .doc(firebase.auth().currentUser.uid)
+    .collection('userJournals')
     .get()
     .then((results) => {
-      console.log(results)
-      
+      var Arr =[]
+      results.forEach((doc) => {
+        Arr.push(doc)                         
+      })  
+      this.setState({journalsFound: Arr}) 
     })
     .catch((error) => console.error(error))
+
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      console.log("reach")
+    })
+    
   }
   render() {
+    var Arr =[]
+    this.state.journalsFound.forEach((doc) => {
+      Arr.push(doc)                         
+    })  
     return (
       <SafeAreaView >
       <View>
@@ -39,10 +56,18 @@ class JournalMainPage extends React.Component {
 
       </View>
       {/*This is where the journals wi9ll be */}
-      <ScrollView ref={this.TitleList}>
-
-      </ScrollView>
-      <JournalHeader journalTitle='first'/>
+      
+      <FlatList
+      extraData= {this.state.journalsFound}
+      data= {Arr}
+      renderItem={({item}) => (
+        <View>
+        <JournalHeader title={item.data().title} text={item.data().text} navigation={navigation} /> 
+        </View>
+      )} >
+      </FlatList>
+      
+      
 
       <Button title='Add new journal Entry' onPress={this.newJournal}/>
       </SafeAreaView>

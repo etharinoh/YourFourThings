@@ -128,8 +128,8 @@ class App extends Component {
 function JStack(){
   return (
     <JournalStack.Navigator>
-      <JournalStack.Screen name='Main' component={JournalMainPage}/>
-      <JournalStack.Screen name='Entry' component={JournalEntryPage}/>
+      <JournalStack.Screen name='Main' component={JournalMainPage} options={{headerShown: false, }}/>
+      <JournalStack.Screen name='Entry' component={JournalEntryPage} options={{}}/>
     </JournalStack.Navigator>
   )
 }
