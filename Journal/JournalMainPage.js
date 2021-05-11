@@ -2,7 +2,10 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
 import JournalHeader from './JournalHeader';
 import firebase from  '../Firebase/config'
-import {connect} from 'react'
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchUser, fetchJournals} from "../redux/action";
 
 var navigation;
 class JournalMainPage extends React.Component {
@@ -23,33 +26,24 @@ class JournalMainPage extends React.Component {
   }
   componentDidMount(){
     //Check all created and make a journal header with them
-    firebase
-    .firestore()
-    .collection("journals")
-    .doc(firebase.auth().currentUser.uid)
-    .collection('userJournals')
-    .get()
-    .then((results) => {
-      var Arr =[]
-      results.forEach((doc) => {
-        Arr.push(doc)                         
-      })  
-      this.setState({journalsFound: Arr}) 
-    })
-    .catch((error) => console.error(error))
-
-    this.focusListener = this.props.navigation.addListener('didFocus', () => {
-      console.log("reach")
-    })
+    
+    this.props.fetchJournals();
     
   }
   render() {
     var Arr =[]
-    this.state.journalsFound.forEach((doc) => {
-      Arr.push(doc)                         
-    })  
-    return (
-      <SafeAreaView >
+    const { journals } = this.props.journals;
+    console.log(this.state)
+    if(journals== null){
+      return (
+        <View><Text>Loading Journals</Text></View>
+      )
+    }   
+      console.log(journals)  
+      return (
+      <SafeAreaView style={{paddingTop: '6%'}}>
+      <Button title='Add new journal Entry' onPress={this.newJournal}/>
+      
       <View>
         <Text style={{fontSize: 42, marginTop: 15, textAlign: "center"}}>Journal Main Page</Text>
 
@@ -59,22 +53,27 @@ class JournalMainPage extends React.Component {
       
       <FlatList
       extraData= {this.state.journalsFound}
-      data= {Arr}
+      data= {journals}
       renderItem={({item}) => (
         <View>
-        <JournalHeader title={item.data().title} text={item.data().text} navigation={navigation} /> 
+        <JournalHeader title={item.title} text={item.text} navigation={navigation} /> 
         </View>
       )} >
       </FlatList>
-      
-      
-
-      <Button title='Add new journal Entry' onPress={this.newJournal}/>
+            
       </SafeAreaView>
-    );
+    );  
+    
+    
   }
 }
 
-// ...
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+  journals: store.userState
+});
+const mapDispatchProps = (dispatch) =>
+  bindActionCreators({ fetchUser, fetchJournals }, dispatch);
 
-export default JournalMainPage;
+export default connect(mapStateToProps, mapDispatchProps)(JournalMainPage);
+

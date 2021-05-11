@@ -112,11 +112,11 @@ class App extends Component {
         }}
       >
         <Tab.Screen name="Search" component={SearchPage} />
-        <Tab.Screen name="Journal" component={JStack} />
+        <Tab.Screen name="Journal" component={JStack} options={{unmountOnBlur: true}}/>
         
         <Tab.Screen name="Home" component={MainPage} options={{unmountOnBlur: true}}/>
         
-        <Tab.Screen name="Weekly" component={WeeklyPlanPage} />
+        <Tab.Screen name="Weekly" component={WeeklyPlanPage} options={{unmountOnBlur: true}}/>
         <Tab.Screen name="Settings" component={SettingsPage} />
       </Tab.Navigator>
     </NavigationContainer>
@@ -128,8 +128,8 @@ class App extends Component {
 function JStack(){
   return (
     <JournalStack.Navigator>
-      <JournalStack.Screen name='Main' component={JournalMainPage} options={{headerShown: false, }}/>
-      <JournalStack.Screen name='Entry' component={JournalEntryPage} options={{}}/>
+      <JournalStack.Screen name='Main' component={JournalMainPage} options={{headerShown: false, unmountOnBlur: true,}}/>
+      <JournalStack.Screen name='Entry' component={JournalEntryPage} options={{unmountOnBlur: true}}/>
     </JournalStack.Navigator>
   )
 }

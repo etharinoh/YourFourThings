@@ -1,6 +1,7 @@
 import {USER_JOURNAL_STATE_CHANGE, USER_STATE_CHANGE} from './constants'
 const initialState = {
-    currentUser: null
+    currentUser: null,
+    journals: null
 }
 
 export const user = (state = initialState, action) => {
