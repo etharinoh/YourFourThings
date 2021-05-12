@@ -3,12 +3,8 @@
 import Checkbox from "expo-checkbox";
 import React, { Component } from "react";
 import { Button, FlatList, View, TextInput } from "react-native";
+import WeeklyItem from './WeeklyItem'
 
-var testMap = new Map();
-testMap.set("Some Text", {text: 'Some Text',completed: false});
-testMap.set("Some more Text", {text: 'Some more Text',completed: false});
-testMap.set("even Text", {text: 'even Text',completed: false});
-testMap.set("Some Text", {text: 'Some Text',completed: true}); //double checking override
 class WeekSection extends Component {
   constructor(props) {
     super(props);
@@ -17,13 +13,15 @@ class WeekSection extends Component {
       title: props.title,
       titleComplete: props.titleComplete,
       tasks: props.tasks,
+      update: false
     };
+    this.props = props
+    this.listRef = React.createRef();
     this.addTask = this.addTask.bind(this);
   }
   addTask() {
-    testMap.set("add new", false);
-    var te = testMap.get("add new")
-    console.log(te)
+    console.log(this.listRef)
+    
   }
 
   render() {
@@ -31,6 +29,7 @@ class WeekSection extends Component {
       <View
         style={{
           paddingVertical: 5,
+          marginVertical: 5,
           marginHorizontal: 5,
           paddingHorizontal: 10,
           backgroundColor: "white",
@@ -51,54 +50,27 @@ class WeekSection extends Component {
             }}
             placeholder="TODO title"
             value={this.state.title}
-            onChangeText={this.changeTitle}
+            onChangeText={(text) => this.setState({ title: text })}
           />
           <Checkbox
             style={{ flex: 0 }}
-            value={this.state.completed}
+            value={this.state.titleComplete}
             onValueChange={(value) => this.setState({ titleComplete: value })}
           />
         </View>
-        {toDoPair({ text: "first", checked: false })}
-        {toDoPair({ text: "second", checked: true })}
-        <FlatList
-          data={testMap.values()}
-          renderItem={({ item }) => (
-            <Text>HI</Text>
-          )}
-        />
         <Button title="Add new task" onPress={this.addTask} color="grey" />
+        
+        {this.props.tasks.map((item)=>{
+          return(
+            <WeeklyItem text={item.txt} complete={item.complete} />
+          )
+          
+        })}
+        
       </View>
     );
   }
 }
 
-const toDoPair = (props) => {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        marginHorizontal: 25,
-      }}
-    >
-      <TextInput
-        style={{
-          fontSize: 14,
-          textAlign: "left",
-          textDecorationStyle: "solid",
-          width: "90%",
-        }}
-        value={props.text}
-        placeholder="TODO item"
-        onChangeText={() => {}}
-      />
-      <Checkbox
-        style={{ flex: 0 }}
-        value={props.checked}
-        onValueChange={(value) => (props.checked = value)}
-      />
-    </View>
-  );
-};
 
 export default WeekSection;

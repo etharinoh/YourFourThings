@@ -97,7 +97,7 @@ class MainPage extends React.Component {
       .firestore()
       .collection("things")
       .doc(firebase.auth().currentUser.uid)
-      .collection(date.toDateString())
+      .collection('dates')
       .doc(date.toDateString())
       .set({
         date,
@@ -119,7 +119,7 @@ class MainPage extends React.Component {
       .firestore()
       .collection("things")
       .doc(firebase.auth().currentUser.uid)
-      .collection(this.state.date.toDateString())
+      .collection('dates')
       .doc(this.state.date.toDateString())
       .get()
       .then((result) => {
