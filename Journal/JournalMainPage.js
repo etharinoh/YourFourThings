@@ -16,24 +16,24 @@ class JournalMainPage extends React.Component {
     this.state = {
       journalsFound: [],
     }
-    
+    console.log(props, 'props')
   }
 
   newJournal(){
     //navigate to new empty journal page
     navigation.navigate('Entry',{newJournal: true})
-    //this.props.navigator.navigate('JournalEntryPage', {})
   }
   componentDidMount(){
-    //Check all created and make a journal header with them
+    //Fetches the journals that correspond to the user using redux
     
-    this.props.fetchJournals();
+    this.props.fetchJournals()
     
   }
+  /** If the journals have been loaded then they will be displayed, otherwisse a loading screen is returned until there is */
   render() {
     var Arr =[]
     const { journals } = this.props.journals;
-    console.log(this.state)
+    console.log(journals)
     if(journals== null){
       return (
         <View><Text>Loading Journals</Text></View>

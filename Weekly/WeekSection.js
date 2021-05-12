@@ -62,7 +62,7 @@ class WeekSection extends Component {
         
         {this.props.tasks.map((item)=>{
           return(
-            <WeeklyItem text={item.txt} complete={item.complete} />
+            <WeeklyItem ref={this.listRef} text={item.txt} complete={item.complete} />
           )
           
         })}

@@ -7,6 +7,7 @@ import {
   TextInput,
   View,
   Button,
+  Alert,
 } from "react-native";
 
 import  firebase from '../Firebase/config'
@@ -28,8 +29,17 @@ class JournalEntryPage extends React.Component {
     this.publish = this.publish.bind(this)
   }
 
+  /**
+   * This will ensure that the title and text have both been filled in and if so then this will be published to the firebase storage
+   */
   publish(){
-    //Convert the entry to a file, upload the file and then add an entry to the firestore collection journals
+    if((this.state.title == '') || (this.state.text =='')){
+      return (
+        Alert.alert('Error', 'Please ensure that the title and text are not empty',[
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ])
+      )
+    }
     firebase
     .firestore()
     .collection("journals")
@@ -40,6 +50,11 @@ class JournalEntryPage extends React.Component {
     .then((result) => console.log(result))
     .catch((error) => console.log(error))
   }
+  /**
+   * This will check to see if the state exists property is true, if this is true then the page will be loaded with the infomration passed from the previous page
+   * Otherwise it will create a blank page to fill in
+   * @returns 
+   */
   render() {
     if(this.state.exists){
       return(

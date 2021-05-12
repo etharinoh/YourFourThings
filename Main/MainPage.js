@@ -30,16 +30,31 @@ class MainPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      date: new Date(),
-      show: false,
-
-      tags: {
-        tag: "",
-        tagsArray: [],
-      },
-      reflection: "",
-    };
+    
+    if (this.props.route.params != undefined) {
+      this.state = {
+        date: this.props.route.params.date.toDate(),
+        show: false,
+  
+        tags: {
+          tag: "",
+          tagsArray: [],
+        },
+        reflection: "",
+      };
+    }
+    else{
+      this.state = {
+        date: new Date(),
+        show: false,
+  
+        tags: {
+          tag: "",
+          tagsArray: [],
+        },
+        reflection: "",
+      };
+    }
     this.thingOne = React.createRef();
     this.thingTwo = React.createRef();
     this.thingThree = React.createRef();
@@ -56,14 +71,11 @@ class MainPage extends React.Component {
   };
 
   componentDidMount() {
-    try {
       this.props.fetchUser();
-      //Try to populate with things for today
-      this.updateThings();
-    } catch (error) {
-      console.log(error);
+        this.updateThings();
+      
     }
-  }
+
   setDate = (event, date) => {
     this.setState({ date: date, show: false });
     this.updateThings();

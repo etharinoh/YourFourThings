@@ -8,6 +8,9 @@ class WeeklyItem extends Component {
     super(props);
 
     this.props = props;
+
+    this.textRef = React.createRef
+    this.completeRef = React.createRef
   }
   render() {
     return (
@@ -18,13 +21,14 @@ class WeeklyItem extends Component {
         }}
       >
         <TextInput
+          ref={this.textRef}
           style={{
             fontSize: 14,
             textAlign: "left",
             textDecorationStyle: "solid",
             width: "90%",
           }}
-          value={this.props.text}
+          defaultValue={this.props.text}
           placeholder="TODO item"
           onChangeText={(text) => {
               this.setState({text: text})
