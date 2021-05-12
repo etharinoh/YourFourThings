@@ -5,6 +5,9 @@ import React, { Component } from "react";
 import { Button, FlatList, View, TextInput } from "react-native";
 import WeeklyItem from './WeeklyItem'
 
+/**
+ * This is the component for defining the section for the weekly page
+ */
 class WeekSection extends Component {
   constructor(props) {
     super(props);
@@ -19,11 +22,17 @@ class WeekSection extends Component {
     this.listRef = React.createRef();
     this.addTask = this.addTask.bind(this);
   }
+  /**
+   * Should handle adding a new item to the UI
+   */
   addTask() {
-    console.log(this.listRef)
+    
     
   }
-
+/**
+ * 
+ * @returns Returns the title and section complete checkbox, also renders all items using props
+ */
   render() {
     return (
       <View
@@ -34,6 +43,7 @@ class WeekSection extends Component {
           paddingHorizontal: 10,
           backgroundColor: "white",
           borderRadius: 15,
+          borderWidth: 1
         }}
       >
         <View

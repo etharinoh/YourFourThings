@@ -4,6 +4,9 @@ const initialState = {
     journals: null
 }
 
+/**
+ * this is the reducer used for handing the different changes called thoruhg the user actions
+ */
 export const user = (state = initialState, action) => {
     switch(action.type){
         case USER_STATE_CHANGE:

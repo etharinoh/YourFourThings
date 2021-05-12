@@ -65,7 +65,7 @@ class WeeklyPlanPage extends React.Component {
   render() {
     return (
       <SafeAreaView
-        style={{ justifyContent: "space-between", alignItems: "center" , backgroundColor:'#AB9BFC'}}
+        style={{ justifyContent: "space-between", alignItems: "center" ,}}
       >
         <View style={{flexDirection: 'row', paddingTop: 25,
               paddingHorizontal: 10}}>

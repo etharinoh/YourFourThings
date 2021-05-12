@@ -4,6 +4,10 @@ import firebase from '../Firebase/config'
 import SearchItem from './SearchItem';
 
 var navigation
+/**
+ * THis is the page which handes the searching for tags, thing and journals and returns them to the user. these can be used to redirect
+ * 
+ */
 class SearchPage extends React.Component {
   constructor(props){
     super(props)
@@ -15,10 +19,25 @@ class SearchPage extends React.Component {
     this.searchFor = this.searchFor.bind(this)
   }
 
+  /**
+   * This handles the collections and setting for the results of the search method
+   * 
+   * @param {*} toFind the string to find
+   * @param {*} type the type of search to perform, by tag, by thing or by journal title
+   * @returns Alerts on failure
+   */
   async searchFor(toFind, type) {
     const result =[]
     var method ='';
     this.setState({results: [], method: ''})
+    console.log(toFind)
+    if(toFind == undefined){
+      return(
+        Alert.alert('Error', 'Please ensure that the search field is not empty',[
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ])
+      )
+    }
     switch(type){
       case "Tg":
       method = "Tags"
@@ -35,10 +54,12 @@ class SearchPage extends React.Component {
         results.forEach((doc) => {
           var found =  false;
           doc.data().tags.tagsArray.forEach(element => {
-            if(element >= toFind){
+            console.log(element, toFind)
+            if(element == toFind){
 
               if(!found){
                 result.push(doc.data())
+
               }
               found  = true;
             }
@@ -57,7 +78,7 @@ class SearchPage extends React.Component {
       .then((results) => {
         
         results.forEach((doc) => {
-          if((doc.data().thing1Text >= toFind) || (doc.data().thing2Text >= toFind) || (doc.data().thing3Text >= toFind) || (doc.data().thing4Text >= toFind)){
+          if((doc.data().thing1Text == toFind) || (doc.data().thing2Text == toFind) || (doc.data().thing3Text == toFind) || (doc.data().thing4Text == toFind)){
             result.push(doc.data())
           }
         })})
@@ -73,7 +94,7 @@ class SearchPage extends React.Component {
         .get()
         .then((results) => {
             results.forEach((doc) => {
-              if(doc.data().title >= toFind){
+              if(doc.data().title == toFind){
                 result.push(doc.data())  
               }
                                     
@@ -86,12 +107,22 @@ class SearchPage extends React.Component {
       default:
         method = 'none';
     } 
+    if(this.state.results.length ==0 || this.state.results == undefined){
+      Alert.alert('Error', 'The search returned nothing',[
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ])
+    }
+    
   }
+  /**
+   * the render method 
+   * @returns returns the component with the results from the search
+   */
   render() {
     if(this.state.results.length == 0){
-<SafeAreaView >
+<SafeAreaView style={{backgroundColor: '#AB9BFC'}}>
         <View style={{flexDirection: 'row', paddingTop: 25,
-              marginBottom: 10}}>
+              marginBottom: 10, backgroundColor: '#AB9BFC' }}>
         <TextInput style={{flex: 1, borderWidth: 1, margin: 2, alignContent: 'center'}} placeholder="Search" onChangeText={(searchFor) => this.setState({ searchFor })}/>
         </View>
         <View style={{flexDirection: 'row', marginHorizontal: 5, alignContent: 'center', alignSelf: 'center', padding: 10}}>
@@ -103,15 +134,16 @@ class SearchPage extends React.Component {
         <Button title="Search Journals" onPress={() => this.searchFor(this.state.searchFor, "J")} />
         
         </View>
+        <Text>The search turned up empty :(</Text>
       </SafeAreaView>
     }
     return (
       <SafeAreaView >
         <View style={{flexDirection: 'row', paddingTop: 25,
-              marginBottom: 10}}>
+              marginBottom: 10,}}>
         <TextInput style={{flex: 1, borderWidth: 1, margin: 2, alignContent: 'center'}} placeholder="Search" onChangeText={(searchFor) => this.setState({ searchFor })}/>
         </View>
-        <View style={{flexDirection: 'row', marginHorizontal: 5, alignContent: 'center', alignSelf: 'center', padding: 10}}>
+        <View style={{flexDirection: 'row', marginHorizontal: 5, alignContent: 'center', alignSelf: 'center', padding: 10, }}>
           
         <Button  title="Search Tags" onPress={() => {this.searchFor(this.state.searchFor, "Tg")}} />
         
@@ -133,6 +165,5 @@ class SearchPage extends React.Component {
   }
 }
 
-// ...
 
 export default SearchPage;

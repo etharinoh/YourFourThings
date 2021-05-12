@@ -39,6 +39,9 @@ const Tab = createBottomTabNavigator();
 const WeeklyStack = createStackNavigator()
 const JournalStack = createStackNavigator()
 
+/**
+ * The main app for running and sorting the store for redux and navigation for the app
+ */
 class App extends Component {
   constructor(props){
     super(props)
@@ -47,10 +50,14 @@ class App extends Component {
       loaded: false,
       loggedIn: false
     }
+    //Removal of a constant long log message - BREAKS WEB VIEW
     LogBox.ignoreLogs([
       'Setting a timer'
       ])
   }
+  /**
+   * Checks to see if the user has logged in or out
+   */
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
@@ -67,6 +74,10 @@ class App extends Component {
       }
     })
   }
+  /**
+   * 
+   * @returns Render is used to either show the app as still loading or the login page. If the user is logged in then the main tab bar section will be returned
+   */
   render(){
     const {loggedIn, loaded} = this.state
 
@@ -125,6 +136,10 @@ class App extends Component {
   }}
 }
 
+/**
+ * 
+ * @returns The navigation stack for journals
+ */
 function JStack(){
   return (
     <JournalStack.Navigator>

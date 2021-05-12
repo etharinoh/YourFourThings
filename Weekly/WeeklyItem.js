@@ -3,6 +3,9 @@ import { Button, FlatList, View, TextInput } from "react-native";
 
 import Checkbox from "expo-checkbox";
 
+/**
+ * The component for creating each item for the weekly section
+ */
 class WeeklyItem extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +15,10 @@ class WeeklyItem extends Component {
     this.textRef = React.createRef
     this.completeRef = React.createRef
   }
+  /**
+   * 
+   * @returns Renders according to the props it was given
+   */
   render() {
     return (
       <View

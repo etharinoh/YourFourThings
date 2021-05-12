@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 var navigation
+/**
+ * used to defife the search item component used on each item returned from the search page
+ */
 class SearchItem extends Component {
     constructor(props){
         super(props)
@@ -24,8 +27,10 @@ class SearchItem extends Component {
         
         this.onHeaderPress = this.onHeaderPress.bind(this)
 
-        //console.log(this.state)
     }
+    /**
+     * Handles navigation to the correct section with the correct parameters, parameters are lost wehn enteiring the journal stack
+     */
     onHeaderPress(){
         if(this.state.method == "Journals"){
             navigation.navigate('Journal',{searchRedirect: true, text: this.state.journalText, title: this.state.journalTitle})

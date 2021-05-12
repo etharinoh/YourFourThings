@@ -1,6 +1,10 @@
 import firebase from '../Firebase/config'
 import {USER_JOURNAL_STATE_CHANGE, USER_STATE_CHANGE} from "./constants"
 
+/**
+ * 
+ * @returns calls dispatch to fetch a users information when the page is loaded
+ */
 export function fetchUser() {
     return ((dispatch) => {
         firebase.firestore().collection('users')
@@ -16,6 +20,10 @@ export function fetchUser() {
         })
     })
 }
+/**
+ * 
+ * @returns calls dispatch to fetch all journals when the page is loaded
+ */
 export function fetchJournals(){
     return ((dispatch) => {
     firebase
